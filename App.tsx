@@ -7,10 +7,11 @@
 
 import React from 'react';
 import {SafeAreaView, Text} from 'react-native';
-
+import {Provider as StoreProvider} from 'react-redux';
 import {MD3LightTheme as DefaultTheme, PaperProvider} from 'react-native-paper';
 
 import PaymentScreen from './src/screen/PaymentScreen';
+import store from './src/store/index';
 
 const theme = {
   ...DefaultTheme,
@@ -23,14 +24,16 @@ const theme = {
 
 function App(): React.JSX.Element {
   return (
-    <PaperProvider theme={theme}>
-      <SafeAreaView>
-        <Text>
-          APPadssssdsaFDDSAFDASFGDSAHJFGDHJKASGFDJKDSsssssssssssssssssssss
-        </Text>
-        <PaymentScreen />
-      </SafeAreaView>
-    </PaperProvider>
+    <StoreProvider store={store}>
+      <PaperProvider theme={theme}>
+        <SafeAreaView>
+          <Text>
+            APPadssssdsaFDDSAFDASFGDSAHJFGDHJKASGFDJKDSsssssssssssssssssssss
+          </Text>
+          <PaymentScreen />
+        </SafeAreaView>
+      </PaperProvider>
+    </StoreProvider>
   );
 }
 
