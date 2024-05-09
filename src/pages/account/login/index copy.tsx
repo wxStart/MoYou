@@ -5,8 +5,56 @@ import {HelperText, TextInput} from 'react-native-paper';
 import {pxToDp} from '../../../utils/styleHelper';
 import {validatePhone} from '../../../utils/validator';
 
+import Toast, {BaseToast, ErrorToast} from 'react-native-toast-message';
 import {Drawer} from 'react-native-drawer-layout';
-import Toast from '../../../components/toast/Toast';
+/*
+  1. Create the config
+*/
+const toastConfig = {
+  /*
+      Overwrite 'success' type,
+      by modifying the existing `BaseToast` component
+    */
+  success: (props: any) => (
+    <BaseToast
+      {...props}
+      style={{borderLeftColor: 'pink'}}
+      contentContainerStyle={{paddingHorizontal: 15}}
+      text1Style={{
+        fontSize: 15,
+        fontWeight: '400',
+      }}
+    />
+  ),
+  /*
+      Overwrite 'error' type,
+      by modifying the existing `ErrorToast` component
+    */
+  error: (props: any) => (
+    <ErrorToast
+      {...props}
+      text1Style={{
+        fontSize: 17,
+      }}
+      text2Style={{
+        fontSize: 15,
+      }}
+    />
+  ),
+  /*
+      Or create a completely new type - `tomatoToast`,
+      building the layout from scratch.
+  
+      I can consume any custom `props` I want.
+      They will be passed when calling the `show` method (see below)
+    */
+  tomatoToast: ({text1, props}: any) => (
+    <View style={{height: 60, width: '90%', backgroundColor: 'tomato'}}>
+      <Text>{text1}哈哈哈</Text>
+      <Text>{props.uuid}</Text>
+    </View>
+  ),
+};
 
 const Login = () => {
   const [open, setOpen] = React.useState(false);
@@ -18,10 +66,15 @@ const Login = () => {
     return !validatePhone(text);
   };
   const showToast = () => {
-    Toast.loading('网络请求中');
+    Toast.show({
+      type: 'tomatoToast',
+      // And I can pass any custom props I want
+      text1: '12313',
+      props: {uuid: 'bba1a7d0-6ab2-4a0a-a76e-ebbe05ae6d70'},
+    });
     setTimeout(() => {
       Toast.hide();
-    }, 5000);
+    }, 1000);
   };
   return (
     <Drawer
@@ -38,6 +91,7 @@ const Login = () => {
           style={style.bgImag}
           source={require('../../../asset/images/login.png')}
         />
+        <Toast config={toastConfig} />
         <View style={style.container}>
           <Text
             onPress={() => {
@@ -64,6 +118,7 @@ const Login = () => {
                 color={'#666'}
               />
             }
+            right={<TextInput.Icon icon="eye" />}
             onSubmitEditing={() => {
               showToast();
             }}

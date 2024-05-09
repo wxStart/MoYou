@@ -11,12 +11,22 @@ import {Dimensions} from 'react-native';
 /**
  * 屏幕宽度
  */
-export const screenWidth: number = Dimensions.get('window').width;
+export const screenWidth: number = Dimensions.get('screen').width;
 
 /**
- * 屏幕高度度
+ * 屏幕高度
  */
-export const screenHeight: number = Dimensions.get('window').height;
+export const screenHeight: number = Dimensions.get('screen').height;
+
+/**
+ * 窗口宽度
+ */
+export const windowWidth: number = Dimensions.get('window').width;
+
+/**
+ * 窗口高度
+ */
+export const windowHeight: number = Dimensions.get('window').height;
 
 /**
  *
