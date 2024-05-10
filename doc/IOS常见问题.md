@@ -1,10 +1,13 @@
 
 ### 接口问题 网络请求 http
+
+
 1. 无法访问http请求，安卓正常
 + NSAllowsArbitraryLoads 允许http访问
 + NSExceptionDomains 设置允许访问的域名
 ```xml
-
+<!--  file  ios/项目工程/Info.plist -->  
+<!--  项目工程 每个人的可能不一样 我的例子是MoYou -->
 <key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

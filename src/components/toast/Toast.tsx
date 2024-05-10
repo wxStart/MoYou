@@ -6,7 +6,6 @@ import type {ToastOptions} from 'react-native-toast-message';
 import LoadingToast from './Loading';
 
 const toastConfig = {
-  info: (props: any) => <LoadingToast key={Date.now()} {...props} />,
   loading: (props: any) => (
     <LoadingToast key={Date.now()} {...props} isLoading />
   ),
@@ -19,6 +18,15 @@ const MyToast = () => {
 MyToast.success = function (message: string, options?: ToastOptions) {
   Toast.show({
     type: 'success',
+    text1: message,
+    visibilityTime: 4000,
+    ...options,
+  });
+};
+
+MyToast.info = function (message: string, options?: ToastOptions) {
+  Toast.show({
+    type: 'info',
     text1: message,
     visibilityTime: 4000,
     ...options,
