@@ -44,9 +44,6 @@ const Login = (props: StackScreenProps) => {
 
   // 获取验证码
   const getLoginCode = async () => {
-    props.navigation.navigate('userInfo', {isNew: true});
-
-    return;
     if (hasErrors()) {
       Toast.info('请输入正确的手机号');
       return;

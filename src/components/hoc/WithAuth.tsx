@@ -2,22 +2,30 @@ import * as React from 'react';
 import type {StackScreenProps} from '../../env';
 import {useAppSelector} from '../../hooks/store';
 
-const WithAuth = (WrappedComponent: React.ComponentType<StackScreenProps>) => {
-  WithAuth.displayName = WrappedComponent.name
-    ? WrappedComponent.name + 'HOC'
-    : WrappedComponent.displayName
-    ? WrappedComponent.displayName + 'HOC'
-    : WithAuth.displayName;
-  return (props: StackScreenProps) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+function Redirect(props: object) {
+  const tem = props as StackScreenProps;
+  tem.navigation.replace('login', {...tem.route});
+  return <React.Fragment />;
+}
+
+function WithAuth<T extends object>(WrappedComponent: React.ComponentType<T>) {
+  function WithAuthCom(props: T) {
     const {token} = useAppSelector(state => state.user);
+
     if (token) {
       return <WrappedComponent {...props} />;
     } else {
-      return props.navigation.replace('login', {...props.route});
+      return <Redirect {...props} />;
     }
-  };
-};
-WithAuth.displayName = 'AuthCom';
+  }
+
+  WithAuthCom.displayName = WrappedComponent.name
+    ? WrappedComponent.name + 'HOC'
+    : WrappedComponent.displayName
+    ? WrappedComponent.displayName + 'HOC'
+    : 'WithAuth';
+
+  return WithAuthCom;
+}
 
 export default WithAuth;

@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 function AccountStack() {
   return (
     <>
-      <Stack.Navigator initialRouteName="login">
+      <Stack.Navigator initialRouteName="userInfo">
         <Stack.Screen
           name="login"
           component={Login}
